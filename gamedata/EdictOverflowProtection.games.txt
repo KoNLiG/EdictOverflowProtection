@@ -6,26 +6,26 @@
 		{
 			"pCGameServer"
 			{
-				"signature"	"ED_Alloc"
+				"signature"	"ED_Free"
 				"linux"
 				{
-					"read"	"107"
+					"read"	"43"
 				}
 				"windows"
 				{
-					"read"	"107"
+					"read"	"43"
 				}
 			}
 		}
 		
 		"Signatures"
 		{
-			// string: "ED_Alloc: no free edicts"
-			"ED_Alloc"
+			// string: "ED_Free(0x%p) called after sv.edicts == NULL\n"
+			"ED_Free"
 			{
 				"library"	"engine"
-				"linux"		"\x55\x89\xE5\x83\xEC\x58\x89\x75\xF8\x8B\x75\x08\x89\x5D\xF4\x89\x7D\xFC\x85\xF6"
-				"windows"	"\x55\x8B\xEC\x51\x56\x8B\xF1\x85\xF6\x78\x2A"
+				"linux"		"\x55\x89\xE5\x83\xEC\x18\xA1\x2A\x2A\x2A\x2A\x89\x5D\xF8\x89\x75\xFC\x8B\x5D\x08\x85\xC0"
+				"windows"	"\x57\x8B\xF9\x8B\x0D\x2A\x2A\x2A\x2A\x85\xC9\x75\x2A\x57"
 			}
 			
 			// string: "CreateEntityByName( %s, %d ) - CreateEdict failed."
@@ -39,10 +39,10 @@
 		
 		"Offsets"
 		{
-			"CGameServer::max_edicts"
+			"CGameServer::num_edicts"
 			{
-				"linux"		"944"
-				"windows"	"944"
+				"linux"		"940"
+				"windows"	"940"
 			}
 		}
 	}
