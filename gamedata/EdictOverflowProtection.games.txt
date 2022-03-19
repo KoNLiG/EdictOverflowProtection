@@ -2,47 +2,14 @@
 {
 	"csgo"
 	{
-		"Addresses"
-		{
-			"pCGameServer"
-			{
-				"signature"	"ED_Free"
-				"linux"
-				{
-					"read"	"43"
-				}
-				"windows"
-				{
-					"read"	"43"
-				}
-			}
-		}
-		
 		"Signatures"
 		{
-			// string: "ED_Free(0x%p) called after sv.edicts == NULL\n"
-			"ED_Free"
-			{
-				"library"	"engine"
-				"linux"		"\x55\x89\xE5\x83\xEC\x18\xA1\x2A\x2A\x2A\x2A\x89\x5D\xF8\x89\x75\xFC\x8B\x5D\x08\x85\xC0"
-				"windows"	"\x57\x8B\xF9\x8B\x0D\x2A\x2A\x2A\x2A\x85\xC9\x75\x2A\x57"
-			}
-			
 			// string: "CreateEntityByName( %s, %d ) - CreateEdict failed."
 			"CreateEntityByName"
 			{
 				"library"	"server"
 				"linux" 	"\x55\x89\xE5\x83\xEC\x38\x89\x5D\xF4\x8B\x5D\x0C\x89\x75\xF8\x8B\x75\x08\x89\x7D\xFC\x0F\xB6\x7D\x10"
 				"windows"	"\x55\x8B\xEC\x56\x8B\xF2\x57"
-			}
-		}
-		
-		"Offsets"
-		{
-			"CGameServer::num_edicts"
-			{
-				"linux"		"940"
-				"windows"	"940"
 			}
 		}
 	}

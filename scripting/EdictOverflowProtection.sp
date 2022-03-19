@@ -4,16 +4,8 @@
 #pragma semicolon 1
 #pragma newdecls required
 
-#define min(%1,%2)            (((%1) < (%2)) ? (%1) : (%2))
-#define max(%1,%2)            (((%1) > (%2)) ? (%1) : (%2))
-#define mclamp(%1,%2,%3)      min(max(%1,%2),%3)
-
-DynamicDetour ED_FreeDetour;
 DynamicDetour CreateEntityByNameDetour;
 
-Address pCGameServer;
-
-int num_edictsOffset;
 int max_edicts;
 
 public Plugin myinfo = 
@@ -21,42 +13,13 @@ public Plugin myinfo =
 	name = "Edict Overflow Protection", 
 	author = "KoNLiG", 
 	description = "Useful tool to prevent edict overflow crashes in source engine games.", 
-	version = "1.1.4", 
+	version = "1.1.", 
 	url = "https://github.com/KoNLiG/EdictOverflowProtection"
 };
 
 public void OnPluginStart()
 {
 	GameData gamedata = new GameData("EdictOverflowProtection.games");
-	
-	if (!(pCGameServer = gamedata.GetAddress("pCGameServer")))
-	{
-		SetFailState("Failed to get 'pCGameServer' address");
-	}
-	
-	if ((num_edictsOffset = gamedata.GetOffset("CGameServer::num_edicts")) == -1)
-	{
-		SetFailState("Failed to get 'CGameServer::num_edicts' offset");
-	}
-	
-	// Hook 'ED_Free'.
-	if (!(ED_FreeDetour = new DynamicDetour(Address_Null, CallConv_CDECL, ReturnType_Void, ThisPointer_Ignore)))
-	{
-		SetFailState("Failed to setup detour for 'ED_Free'");
-	}
-	
-	if (!ED_FreeDetour.SetFromConf(gamedata, SDKConf_Signature, "ED_Free"))
-	{
-		SetFailState("Failed to load 'ED_Free' signature from gamedata");
-	}
-	
-	// Add parameters
-	ED_FreeDetour.AddParam(HookParamType_Edict);
-	
-	if (!ED_FreeDetour.Enable(Hook_Pre, Detour_OnED_Free))
-	{
-		SetFailState("Failed to detour 'ED_Free'");
-	}
 	
 	// Hook 'CreateEntityByName'.
 	if (!(CreateEntityByNameDetour = new DynamicDetour(Address_Null, CallConv_CDECL, ReturnType_CBaseEntity, ThisPointer_Ignore)))
@@ -82,18 +45,6 @@ public void OnPluginStart()
 	delete gamedata;
 	
 	max_edicts = GetMaxEntities();
-}
-
-MRESReturn Detour_OnED_Free(DHookParam hParams)
-{
-	int edict = hParams.Get(1);
-	
-	if (IsValidEdict(edict))
-	{
-		StoreToAddress(pCGameServer + view_as<Address>(num_edictsOffset), mclamp(LoadFromAddress(pCGameServer + view_as<Address>(num_edictsOffset), NumberType_Int32) - 1, MaxClients + 1, max_edicts), NumberType_Int32);
-	}
-	
-	return MRES_Ignored;
 }
 
 // Replicate:
