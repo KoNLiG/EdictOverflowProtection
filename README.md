@@ -1,3 +1,5 @@
+At the time this plugin in in-development state and leads to random crashes - DO NOT USE IT!
+
 # EdictOverflowProtection
 Useful tool to prevent edict overflow crashes in source engine games.
 
