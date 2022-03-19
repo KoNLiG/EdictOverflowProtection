@@ -13,7 +13,7 @@ public Plugin myinfo =
 	name = "Edict Overflow Protection", 
 	author = "KoNLiG", 
 	description = "Useful tool to prevent edict overflow crashes in source engine games.", 
-	version = "1.1.", 
+	version = "1.1.5", 
 	url = "https://github.com/KoNLiG/EdictOverflowProtection"
 };
 
